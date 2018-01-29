@@ -25,7 +25,7 @@ var jobController = require('./api-controllers/job.api');
 var app = express();
 
 
-mongoose.connect(process.env.MONGODB_DEV);
+mongoose.connect(process.env.MONGODB_PROD);
 mongoose.connection.on('error', function() {
   console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
