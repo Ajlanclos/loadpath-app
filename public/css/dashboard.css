@@ -22,6 +22,11 @@ a {
     color: #337ab7;
 }
 
+a.disabled {
+    color: lightgray;
+    pointer-events: none;
+}
+
 /* BUTTONS */
 .btn {
     border-radius: 0;
