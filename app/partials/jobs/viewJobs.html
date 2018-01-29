@@ -1,0 +1,207 @@
+<div ng-controller="JobCtrl">
+    <div class="row easeIn" ng-show="detailPanel">
+        <div id="toplevel" class="col-md-12">
+            <div class="col-md-12">
+                <h4>Job Details</h4>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li ng-class="{active: tab == 1}">
+                                <a href="#" ng-click="tab = 1">Logistics</a>
+                            </li>
+                            <li ng-class="{active: tab == 2}">
+                                <a href="#" ng-click="tab = 2">Load</a></li>
+                            <!-- <li><a data-toggle="tab" href="#">Location</a></li> -->
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content" ng-show="tab == 1">
+                            <div>
+                                <div class="col-md-12">
+                                    <div class="well well-lg">
+                                        <p><strong>Company: </strong>{{selectedJob.company}}</p>
+                                        <p><strong>Start Location: </strong>{{selectedJob.start_location}}</p>
+                                        <p><strong>End Location: </strong>{{selectedJob.end_location}}</p>
+                                        <p><strong>Pickup Date: </strong>{{selectedJob.pickup_date | date: 'MM/dd/yy'}}</p>
+                                        <p><strong>Delivery Date: </strong>{{selectedJob.delivery_date | date: 'MM/dd/yy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content"  ng-show="tab == 2">
+                            <div>
+                                <div class="col-md-12">
+                                    <div class="well well-lg">
+                                        <p><strong>Weight: </strong>{{selectedJob.weight}} lbs.</p>
+                                        <p><strong>Length: </strong>{{selectedJob.length}} ft.</p>
+                                        <p><strong>Equipment Type: </strong>{{selectedJob.equipment_type}}</p>
+                                        <p><strong>Hazmat: </strong>{{selectedJob.hazmat}}</p>
+                                        <p><strong>Description: </strong></p>        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="well well-sm">
+                                <div class="row">
+                                    <div class="col-md-4 text-left">
+                                        <h5><strong>Driver: </strong><span class="inner-well reporter">{{selectedJob.driver_assigned}}</span></h5>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <h5><strong>Reporter: </strong><span class="inner-well reporter">{{selectedJob.reporter}}</span></h5>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <h5><strong>Payment: </strong><span class="inner-well payment">{{selectedJob.payment_amt | currency}}</span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <button class="btn btn-warning" ng-click="openEditPanel()" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil-square-o"></i></button>
+                        <button class="btn btn-danger" ng-click="deleteJob(selectedJob.id)"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-default" ng-click="closeDetailsPanel()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div id="toplevel" class="col-md-12">
+            <div class="col-md-12">
+                <h4>All Jobs Available</h4> 
+                <div class="panel">
+                    <div class="panel-body">
+                        
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Client:</th>
+                                <th>Start:</th>
+                                <th>End:</th>
+                                <th>Pickup Date:</th>
+                                <th>Deliver Date:</th>
+                                <th>Payment:</th>
+                                <th>Status:</th>
+                            </thead>
+                            <tr ng-repeat="job in jobs.jobs">
+                                <td>
+                                    <a href="#" ng-click="getJobDetails(job)">{{job.company}}</a>
+                                </td>
+                                <td>
+                                    {{job.start_location}}
+                                </td>
+                                <td>
+                                    {{job.end_location}}
+                                </td>
+                                <td>
+                                    {{job.pickup_date | date: 'MM/dd/yy'}} @ {{job.pickup_time | date: 'HH:mm'}}
+                                </td>
+                                <td>
+                                    {{job.delivery_date | date: 'MM/dd/yy'}} @ {{job.delivery_time | date: 'HH:mm'}}
+                                </td> 
+                                <td>
+                                    {{job.payment_amt | currency}}
+                                </td>
+                                <td>
+                                    {{job.status}}
+                                </td>
+                                <td>
+                                    <i class="fa fa-search-plus" ng-click="getJob(job._id)"></i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-show="editPanel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Editing Job Record For {{selectedJob.company}}</h4>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="editJob()">
+                    <div class="form-group">
+                        <label>Client</label>
+                        <input class="form-control" type="text" name="company" ng-model="selectedJob.company" placeholder=""/>
+                    </div>
+                    <div class="form-group">
+                        <label>Start Location</label>
+                        <input class="form-control" type="text" name="start_location" ng-model="selectedJob.start_location" placeholder=""/>
+                    </div>
+                    <div class="form-group">
+                        <label>End Location</label>
+                        <input class="form-control" type="text" name="end_location" ng-model="selectedJob.end_location" placeholder=""/>
+                        <!-- Calculate the distance here -->
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>Pickup: </label>
+                            <input class="form-control" type="date" name="pickup_date" ng-model="selectedJob.pickup_date" placeholder=""/>
+                            <input class="form-control" type="time" name="pickup_time" ng-model="selectedJob.pickup_time" placeholder=""/>
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery: </label>
+                            <input class="form-control" type="date" name="delivery_date" ng-model="selectedJob.delivery_date" placeholder=""/>
+                            <input class="form-control" type="time" name="delivery_time" ng-model="selectedJob.delivery_time" placeholder=""/>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                            <label>Payment Amount: </label>
+                            <input class="form-control" type="number" name="payment_amt" ng-model="selectedJob.payment_amt" placeholder=""/>
+                        </div>
+                    <div class="form-group">
+                        <label>Weight: </label>
+                        <input class="form-control" type="text" name="weight" ng-model="selectedJob.weight" placeholder=""/>
+                    </div>
+                    <div class="form-group">
+                        <label>Length: </label>
+                        <input class="form-control" type="text" name="length" ng-model="selectedJob.length" placeholder=""/>
+                    </div>
+                    <div class="form-group">
+                        <label>Equipment Type: </label>
+                        <select class="form-control" name="equipment_type" ng-model="selectedJob.equipment_type">
+                            <option>Flatbed</option>
+                            <option>Gooseneck</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Hazmat Required:
+                            <input type="checkbox" name="hazmat" ng-model="selectedJob.hazmat"/>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Driver Assigned: </label>
+                        <select class="form-control" name="driver_assigned" ng-model="selectedJob.driver_assigned">
+                            <option>Andy Lanclos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Reporter: </label>
+                        <input class="form-control" type="text" name="reporter" ng-model="selectedJob.reporter"/>
+                    </div>
+                    <div class="form-group">
+                            <label>Status: </label>
+                            <select class="form-control" name="status" ng-model="selectedJob.status">
+                                <option>Needs Driver</option>
+                                <option>Picking Up</option>
+                                <option>In Route</option>
+                                <option>Delivered</option>
+                            </select>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-default" label="Create job"/>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

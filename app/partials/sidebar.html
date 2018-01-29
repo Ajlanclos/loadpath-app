@@ -1,0 +1,37 @@
+<!-- <div class="wrapper">    -->
+    <!-- Sidebar -->
+    <nav ng-controller="HeaderCtrl" id="sidebar">
+
+        <!-- Sidebar Links -->
+        <ul ng-if="isAuthenticated()" class="nav nav-stacked components">
+            <div class="nav-header">
+                <h5>Users</h5>
+            </div>  
+            <li><a href="#"><i class="fa fa-user-plus"></i>Create New User</a></li>
+            <li><a href="#"><i class="fa fa-users"></i> Users</a></li>
+
+            <div class="nav-header">
+                <h5>Logistics</h5>
+            </div>  
+            <li><a href="/job/new"><i class="fa fa-truck"></i>Create New Load</a></li>
+            <li><a href="/jobs"><i class="fa fa-archive"></i>View Loads</a></li>
+
+            <div class="nav-header">
+                <h5>Clients</h5>
+            </div>  
+            <li><a href="#"><i class="fa fa-address-card"></i>Create New Client</a></li>
+
+            
+                   
+            <!-- <li>
+                <a href="#clientSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fa fa-briefcase"></i>Clients</a>
+                <ul class="collapse list-unstyled" id="clientSubmenu">
+                    <li><a href="#">- Create New Client</a></li>
+                </ul> -->
+            
+        </ul>
+        <div ng-if="!isAuthenticated()" class="alert alert-warning">
+                Please login to see menu...
+            </div>
+    </nav>
+<!-- </div> -->

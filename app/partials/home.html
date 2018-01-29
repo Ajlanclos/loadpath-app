@@ -1,0 +1,44 @@
+<div>
+  <div class="row">
+      <div id="toplevel" class="col-md-12">
+                    <div class="col-md-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>New Jobs</h4>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped" ng-controller="JobCtrl">
+                                    <tr ng-repeat="job in jobs.jobs | orderBy:'-createdAt'">
+                                        <td>
+                                            {{job.company}}
+                                        </td>
+                                        <td>
+                                            {{job.start_location}}
+                                        </td>
+                                        <td>
+                                            {{job.end_location}}
+                                        </td>
+                                        <td>
+                                            {{job.payment_amt | currency}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="panel-footer text-right">
+                                    <a href="/jobs"><button class="btn btn-default">View All Jobs</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel">
+                            <div class="panel-body">
+                                
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+      </div>
+  </div>
+
+

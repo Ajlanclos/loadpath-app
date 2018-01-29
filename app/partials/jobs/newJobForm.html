@@ -1,0 +1,89 @@
+<div class="container" ng-controller="JobCtrl">
+    <div class="row">
+        <div id="toplevel" class="col-md-10">
+            <h4>Create New Job</h4>
+            <div class="panel">
+                <div class="panel-body">
+                    <div ng-if="messages.error" role="alert" class="alert alert-danger">
+                        <div ng-repeat="error in messages.error">{{error.msg}}</div>
+                    </div>
+                    <div ng-if="messages.success" role="alert" class="alert alert-success">
+                        <div ng-repeat="success in messages.success">{{success.msg}}</div>
+                    </div>
+                    <form ng-submit="createJob()">
+                        <div class="form-group">
+                            <label>Client</label>
+                            <input class="form-control" type="text" name="company" ng-model="job.company" placeholder=""/>
+                        </div>
+                        <div class="form-group">
+                            <label>Start Location</label>
+                            <input class="form-control" type="text" name="start_location" ng-model="job.start_location" placeholder=""/>
+                        </div>
+                        <div class="form-group">
+                            <label>End Location</label>
+                            <input class="form-control" type="text" name="end_location" ng-model="job.end_location" placeholder=""/>
+                            <!-- Calculate the distance here -->
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>Pickup: </label>
+                                <input class="form-control" type="date" name="pickup_date" ng-model="job.pickup_date" placeholder=""/>
+                                <input class="form-control" type="time" name="pickup_time" ng-model="job.pickup_time" placeholder=""/>
+                            </div>
+                            <div class="form-group">
+                                <label>Delivery: </label>
+                                <input class="form-control" type="date" name="delivery_date" ng-model="job.delivery_date" placeholder=""/>
+                                <input class="form-control" type="time" name="delivery_time" ng-model="job.delivery_time" placeholder=""/>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                                <label>Payment Amount: </label>
+                                <input class="form-control" type="number" name="payment_amt" ng-model="job.payment_amt" placeholder=""/>
+                            </div>
+                        <div class="form-group">
+                            <label>Weight</label>
+                            <input class="form-control" type="text" name="weight" ng-model="job.weight" placeholder=""/>
+                        </div>
+                        <div class="form-group">
+                            <label>Length</label>
+                            <input class="form-control" type="text" name="length" ng-model="job.length" placeholder=""/>
+                        </div>
+                        <div class="form-group">
+                            <label>Equipment Type</label>
+                            <select class="form-control" name="equipment_type" ng-model="job.equipment_type">
+                                <option>Flatbed</option>
+                                <option>Gooseneck</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hazmat Required
+                                <input type="checkbox" name="hazmat" ng-model="job.hazmat"/>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Driver Assigned</label>
+                            <select class="form-control" name="driver_assigned" ng-model="job.driver_assigned">
+                                <option>Andy Lanclos</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Reporter</label>
+                            <input class="form-control" type="text" name="reporter" ng-model="job.reporter"/>
+                        </div>
+                        <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control" name="status" ng-model="job.status">
+                                    <option>Needs Driver</option>
+                                    <option>Picking Up</option>
+                                    <option>In Route</option>
+                                    <option>Delivered</option>
+                                </select>
+                            </div>
+                        <input type="submit" class="btn btn-default" label="Create job"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
